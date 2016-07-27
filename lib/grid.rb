@@ -34,6 +34,8 @@ class Grid
 		Grid.new(width, height, next_cells)
 	end
 
+	private
+
 	def next_cell_for(cell, x, y)
 		survives?(cell, x, y) ? Cell.new('alive') : Cell.new('dead')
 	end
