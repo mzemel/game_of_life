@@ -5,7 +5,7 @@ class Game
     self.grids = [Grid.new]
     loop do
       step!
-      sleep 1
+      sleep 0.1
       system "clear"
     end
   end
