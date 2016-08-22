@@ -37,7 +37,7 @@ class Grid
   end
 
   def next_cell_for(cell, x, y)
-    survives?(cell, x, y) ? Cell.new('alive') : Cell.new('dead')
+    survives?(cell, x, y) ? Cell.alive : Cell.dead
   end
 
   def survives?(cell, x, y)
@@ -63,7 +63,7 @@ class Grid
     neighbors << cells[x][y-1]   rescue nil
     neighbors << cells[x][y+1]   rescue nil
 
-    neighbors.select {|n| !n.nil? && n.state == 'alive'}
+    neighbors.compact.select(&:alive?)
   end
 
   def randomize_cells
