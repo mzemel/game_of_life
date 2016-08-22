@@ -42,13 +42,18 @@ class Grid
 
   def survives?(cell, x, y)
     _alive_neighbors = alive_neighbors(y,x).count
-    if cell.alive? && _alive_neighbors >=2 && _alive_neighbors <= 3
-      true
-    elsif cell.dead? && _alive_neighbors == 3
-      true
-    else
-      false
-    end
+    # Any live cell with more than three live neighbours dies, as if by over-population.
+    return false if _alive_neighbors > 3
+
+    # Any live cell with fewer than two live neighbours dies, as if caused by under-population.
+    return false if _alive_neighbors < 2
+
+    # Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+    # Any live cell with  [...]  three live neighbours lives on to the next generation.
+    return true  if _alive_neighbors == 3
+
+    # Any live cell with two [...] live neighbours lives on to the next generation.
+    cell.alive?
   end
 
   def alive_neighbors(x, y)
