@@ -18,7 +18,7 @@ class Presenter
   private
 
   def print_cell(cell)
-    val = cell.alive? ? '⬤ ' : '  '
+    val = cell.alive? ? '• ' : '  '
     STDOUT.print val
   end
 end
