@@ -1,16 +1,19 @@
 class Cell
   attr_accessor :state
 
+  ALIVE = :alive
+  DEAD = :dead
+
   def initialize(state = nil)
     @state = state || set_random_state
   end
 
   def self.alive
-    Cell.new(:alive)
+    Cell.new(ALIVE)
   end
 
   def self.dead
-    Cell.new(:dead)
+    Cell.new(DEAD)
   end
 
   def ==(other)
@@ -28,6 +31,6 @@ class Cell
   private
 
   def set_random_state
-    [0,1].sample.zero? ? Cell.alive.state : Cell.dead.state
+    [0,1].sample.zero? ? ALIVE : DEAD
   end
 end
