@@ -1,33 +1,31 @@
 class Cell
   attr_accessor :state
 
-  def initialize(state = nil)
-    @state = state || set_random_state
+  DEAD_CELL = Cell.new
+  ALIVE_CELL = Cell.new
+
+  def self.random
+    [DEAD_CELL, ALIVE_CELL].sample
   end
 
   def self.alive
-    Cell.new(:alive)
+    ALIVE_CELL
   end
 
   def self.dead
-    Cell.new(:dead)
-  end
-
-  def ==(other)
-    state == other.state
+    DEAD_CELL
   end
 
   def alive?
-    self == Cell.alive
+    self == ALIVE_CELL
   end
 
   def dead?
-    self == Cell.dead
+    self == DEAD_CELL
   end
 
-  private
-
-  def set_random_state
-    [0,1].sample.zero? ? Cell.alive.state : Cell.dead.state
+  def to_s
+    alive? ? '🐰' : ' '
   end
+
 end

@@ -5,20 +5,13 @@ class Presenter
     @grid = grid
   end
 
-  def print
-    STDOUT.print "\n"
-    grid.height.times do |y|
-      grid.width.times do |x|
-        print_cell(grid.cells[y][x])
-      end
-      STDOUT.print "\n"
-    end
+  def print_grid
+    print grid.cells.map { |row| row_string(row) }.join("\n")
   end
 
   private
 
-  def print_cell(cell)
-    val = cell.alive? ? '• ' : '  '
-    STDOUT.print val
+  def row_string(row)
+    row.map(&:to_s).join(" ")
   end
 end

@@ -1,5 +1,6 @@
 class Grid
-  DEFAULT_WIDTH = 50
+
+  DEFAULT_WIDTH = `tput cols`.to_i/2 - 4
   DEFAULT_HEIGHT = 50
 
   attr_accessor :presenter
@@ -15,25 +16,21 @@ class Grid
   end
 
   def print
-    presenter.print
+    presenter.print_grid
   end
 
   def next_grid
     Grid.new(width, height, next_cells)
   end
 
-  private
+  # private
 
   def next_cells
-    _next_cells = {}
-    cells.each do |y, rows|
-      new_row = {}
-      rows.each do |x, cell|
-        new_row[x] = next_cell_for(cell, x, y)
+    cells.each_with_index.map do |rows, y|
+      rows.each_with_index.map do |cell, x|
+        next_cell_for(cell, x, y)
       end
-      _next_cells[y] = new_row
     end
-    _next_cells
   end
 
   def next_cell_for(cell, x, y)
@@ -59,27 +56,19 @@ class Grid
   def alive_neighbors(x, y)
     neighbors = []
 
-    neighbors << cells[x-1][y]   rescue nil
+    neighbors << cells[x-1][y]   unless x == 0
     neighbors << cells[x+1][y]   rescue nil
-    neighbors << cells[x-1][y-1] rescue nil
-    neighbors << cells[x+1][y-1] rescue nil
-    neighbors << cells[x-1][y+1] rescue nil
+    neighbors << cells[x-1][y-1] unless x == 0 || y == 0
+    neighbors << cells[x+1][y-1] unless y == 0 rescue nil
+    neighbors << cells[x-1][y+1] unless x == 0 rescue nil
     neighbors << cells[x+1][y+1] rescue nil
-    neighbors << cells[x][y-1]   rescue nil
+    neighbors << cells[x][y-1]   unless y == 0
     neighbors << cells[x][y+1]   rescue nil
 
     neighbors.compact.select(&:alive?)
   end
 
   def randomize_cells
-    cells = {}
-    height.times do |y|
-      row = {}
-      width.times do |x|
-        row[x] = Cell.new
-      end
-      cells[y] = row
-    end
-    self.cells = cells
+    @cells = Array.new(height) { Array.new(width) { Cell.random} }
   end
 end
