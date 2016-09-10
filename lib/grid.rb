@@ -69,8 +69,6 @@ class Grid
   end
 
   def randomize_cells
-    self.cells = height.times.map do |_|
-      width.times.map { |_| Cell.random }
-    end
+    @cells = Array.new(height) { Array.new(width) { Cell.random} }
   end
 end
