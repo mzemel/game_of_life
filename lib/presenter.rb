@@ -12,6 +12,11 @@ class Presenter
   private
 
   def row_string(row)
-    row.map(&:to_s).join(" ")
+    row.map { |cell| sprite(cell) }.join(" ")
   end
+
+  def sprite(cell)
+    cell.alive? ? '🐰' : ' '
+  end
+
 end
