@@ -23,7 +23,7 @@ class Grid
     Grid.new(width, height, next_cells)
   end
 
-  # private
+  private
 
   def next_cells
     cells.each_with_index.map do |rows, y|

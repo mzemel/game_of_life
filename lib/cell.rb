@@ -25,8 +25,4 @@ class Cell
     self == DEAD_CELL
   end
 
-  def to_s
-    alive? ? '🐰' : ' '
-  end
-
 end
